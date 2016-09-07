@@ -13,5 +13,10 @@
 <body>
 	<input id="file" type="file"><br />
 	<canvas id="visualizer" height="255" style="transform: rotate(180deg);"></canvas>
+	<div style="background-color:#fff">
+		<span>周波数</span><input type="text" name="freq" id="freq"><br>
+		<button id="play" onclick="play(document.getElementById('freq').value)">音を鳴らす</button>
+		<button id="stop" onclick="stop()">STOP</button>
+	</div>
 </body>
 </html>

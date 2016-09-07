@@ -1,3 +1,7 @@
+window.AudioContext = window.AudioContext || window.webkitAudioContext; //クロスブラウザ対応
+var audioCtx = new AudioContext();
+var setItvId;
+
 window.onload = function() {
 	var source, animationId;
 	var audioContext = new AudioContext();
@@ -34,4 +38,41 @@ window.onload = function() {
 		}　
 		animationId = requestAnimationFrame(render);
 	};
+	var i=200;
+	var text=document.getElementById('freq');
+	setItvId=setInterval(function(){
+		play(i);
+		text.value=i;
+		i++;
+		if(i>2000){
+			clearInterval(setItvId);
+		}
+	},100);
 };
+
+function play(hz) {
+	//正弦波の音を作成
+	var osciillator = audioCtx.createOscillator();
+ 
+	//ヘルツ（周波数）指定
+	osciillator.frequency.value = hz;
+ 
+	//音の出力先
+	var audioDestination = audioCtx.destination;
+ 
+	//出力先のスピーカーに接続
+	osciillator.connect(audioDestination);
+ 
+	//音を出す
+	osciillator.start = osciillator.start || osciillator.noteOn; //クロスブラウザ対応
+	osciillator.start();
+ 
+	//音を0.5秒後にストップ
+	setTimeout(function() {
+		osciillator.stop();
+	}, 100);
+}
+
+function stop() {
+	clearInterval(setItvId);
+}
